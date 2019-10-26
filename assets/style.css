@@ -12,7 +12,7 @@ html, body{
 }
 .navbar{
     background: linear-gradient(to left, black, rgb(63, 63, 63));
-    height: 80px;
+    height: 10%;
     display: flex;
     justify-content: center;
     
@@ -20,12 +20,14 @@ html, body{
 .heading{
     color: white;
     text-align: center;
+    font-size: 5vh;
+    margin: auto;
     
 }
 .main-body{
     display: flex;
     flex-direction: row;
-    height: 91.5%;
+    height: 90%;
 }
 .left-content{
     display: flex;
@@ -56,7 +58,7 @@ h3{
 
 }
 .right-content{
-    width: 80%;
+    width: 75%;
     display: flex;
     flex-direction: column;
 }
