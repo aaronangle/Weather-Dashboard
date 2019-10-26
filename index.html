@@ -5,20 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="assets/style.css">
     <title>Weather</title>
 </head>
 
 <body>
     <div class="container">
         <div class="navbar">
-            <h1>Weather Dashboard</h1>
+            <h1 class="heading">Weather Dashboard</h1>
         </div>
         <div class="main-body">
             <div class="left-content">
                 <h3>Search for a City:</h3>
-                <input type="text">
-                <div class="search-background">
-                    <img src="assets/images/magnifying-glass.png" alt="search">
+                <div class="search-bar">
+                    <input class="input" type="text"></input>
+
+                    <img class="search-background" src="assets/images/magnifying-glass.png" alt="search">
                 </div>
             </div>
             <div class="right-content">
@@ -31,6 +33,9 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="assets/script.js"></script>
 </body>
 
 </html>
