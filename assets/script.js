@@ -7,7 +7,7 @@ $(".search-background").on("click", function () {
     var input = $(".input").val()
     console.log(input)
     //Make a call to open weather with the user input
-    queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + input + "&APPID=74f0b99ce4d4ead30c56392cfe258bd7"
+    queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&APPID=74f0b99ce4d4ead30c56392cfe258bd7"
     //Create an h1 with the city and current date
     $.ajax({
         url: queryURL,
@@ -28,7 +28,7 @@ $(".search-background").on("click", function () {
         var latitude = response.coord.lat
         var longitude = response.coord.lon
 
-        uvURL = "api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&APPID=74f0b99ce4d4ead30c56392cfe258bd7"
+        uvURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&APPID=74f0b99ce4d4ead30c56392cfe258bd7"
 
         $.ajax({
             url: uvURL,
