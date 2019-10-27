@@ -4,7 +4,7 @@ var previousSearch = $(".previousSearch")
 var today = new Date().toLocaleDateString()
 var buttonList = $(".button")
 
-
+//Onload asks for location to give approximate weather data for user
 if ("geolocation" in navigator) {
     // check if geolocation is supported/enabled on current browser
     navigator.geolocation.getCurrentPosition(
@@ -28,22 +28,27 @@ if ("geolocation" in navigator) {
     console.log('geolocation is not enabled on this browser')
 }
 
+
+
+//Function for get the weather based off user input
 function getWeather(input) {
 
+    //clear out the top and bottom displays to display new data
     topDisplay.empty()
     bottomDisplay.empty()
-    //Get the user input from the input box
-
 
     //Make a call to open weather with the user inputs
     queryURL = "https://api.openweathermap.org/data/2.5/weather?" + input + "&APPID=74f0b99ce4d4ead30c56392cfe258bd7"
 
+    //initial AJAX call for weather data
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function (response) {
-        console.log(response)
+        //Gets the main weather condition
         var weatherDescritpion = response.weather[0].main
+
+        //sets the image based on weather conditions
         var weatherImg = $("<img>")
         if (weatherDescritpion === "Clear") {
             weatherImg.attr("src", "assets/images/sunny.png")
@@ -52,31 +57,35 @@ function getWeather(input) {
         } else if (weatherDescritpion === "Drizzle" || weatherDescritpion === "Rain") {
             weatherImg.attr("src", "assets/images/rain.png")
         }
-
+        //Add a class to the image for styling purposes
         weatherImg.addClass("weatherImg")
 
+        //Gets the temp and converts to Farenheit
         var temp = parseInt(response.main.temp)
         temp = (temp - 273.15) * 9 / 5 + 32
         temp = temp.toFixed(2)
         var temperatureText = $("<p>").text("Temperature: " + temp + " °F")
+
         var humidity = response.main.humidity
         var humidityText = $("<p>").text("Humidty: " + humidity + "%")
+
         var windSpeed = response.wind.speed
         var windSpeedText = $("<p>").text("Wind Speed: " + windSpeed + " MPH")
+
         var cityName = response.name
         var cityText = $("<h2>").text(cityName + " " + "(" + today + ")")
-        var headingHolder = $("<div>")
+
+        var headingHolder = $("<div>").addClass("headingHolder")
         headingHolder.append(cityText, weatherImg)
-        headingHolder.addClass("headingHolder")
+
+
         topDisplay.addClass("top-displayBorder")
         topDisplay.append(headingHolder, temperatureText, humidityText, windSpeedText)
-
-
-
 
         var latitude = response.coord.lat
         var longitude = response.coord.lon
 
+        //new URL to make another call to get the UV index
         uvURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&APPID=74f0b99ce4d4ead30c56392cfe258bd7"
 
         $.ajax({
@@ -86,6 +95,7 @@ function getWeather(input) {
 
             var uv = result.value
 
+            //Sets background color of the UV index based on how high it is
             if (uv < 3) {
                 var uv = $("<span>").text(uv).addClass("uvGreen")
             } else if (uv <= 5) {
@@ -93,6 +103,7 @@ function getWeather(input) {
             } else {
                 var uv = $("<span>").text(uv).addClass("uvRed")
             }
+
             var uvText = $("<p>").text("UV index: ")
             uvText.append(uv)
             topDisplay.append(uvText)
@@ -107,10 +118,12 @@ function getWeather(input) {
         url: forecastURL,
         method: "GET"
     }).then(function (response) {
-        console.log(response)
+        //Counter for the date
         j = 0
+
         var date = $("<h2>").text("5 Day Forecast:")
-        bottomDisplay.append(date)
+        $(".middle-display").append(date)
+
         for (let i = 6; i < response.list.length; i += 8) {
             j += 1
             var tomorrow = new Date();
@@ -144,9 +157,6 @@ function getWeather(input) {
     })
 
     $(".input").val("")
-
-
-
 }
 
 
@@ -156,19 +166,29 @@ function getWeather(input) {
 
 //add event listener to search image
 $(".search-background").on("click", function () {
+    //Get the user input from the input box
     var input = $(".input").val().trim()
 
+    //Create a button for the side bar based on recent searches
     var button = $("<button>")
     button.addClass(input)
     previousSearch.prepend(button.text(input))
+
+    //Creates the input based off user input to add to the queryURL
     input = "q=" + input
     getWeather(input)
 
 })
 
+//Click event for the sidebar buttons
 previousSearch.on("click", function (event) {
+    //Target where the user clicked
     var eventTarget = $(event.target)
+
+    //Find the class of what was clicked
     eventTargetValue = eventTarget.attr("class")
     eventTargetValue = "q=" + eventTargetValue
+
+    //Rund the function with new parameter from sidebar button
     getWeather(eventTargetValue)
 })

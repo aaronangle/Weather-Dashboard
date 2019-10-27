@@ -73,12 +73,22 @@ h3{
     margin: auto;
     padding: 20px;
 }
+.middle-display{
+    width: 80%;
+    margin: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+h2{
+    margin: 10px;
+}
 .bottom-display{
     width: 80%;
     margin: auto;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
 }
 .uvRed{
     background-color: rgba(255, 0, 0, 0.801);
