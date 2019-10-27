@@ -13,7 +13,7 @@ html, body{
 }
 .navbar{
     background: linear-gradient(to left, black, rgb(63, 63, 63));
-    height: 10%;
+    height: 50px;
     display: flex;
     justify-content: center;
     
@@ -21,7 +21,7 @@ html, body{
 .heading{
     color: white;
     text-align: center;
-    font-size: 5vh;
+    font-size: 30px;
     margin: auto;
     
 }
@@ -78,6 +78,7 @@ h3{
     margin: auto;
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 .uvRed{
     background-color: rgba(255, 0, 0, 0.801);
@@ -110,7 +111,7 @@ button{
     margin-left: auto;
     margin-right: auto;
     background-color: white;
-    height: 50px;
+    min-height: 50px;
     border: none;
     text-align: left;    
     border: solid 1px gray;
@@ -121,6 +122,8 @@ button:hover{
 .previousSearch{
     display: flex;
     flex-direction: column;
+    max-height: 500px;
+    overflow: auto;
 }
 .weatherThumbnail{
     height: 40px;
@@ -140,6 +143,11 @@ button:hover{
     align-items: center;
     border-radius: 5px;
     padding: 10px;
+}
+.blueCardText{
+    color: white;
+    text-align: left;
+    margin: 0;
 }
 
 @media only screen and (max-width: 1400px) {

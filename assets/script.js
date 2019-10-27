@@ -5,21 +5,44 @@ var today = new Date().toLocaleDateString()
 var buttonList = $(".button")
 
 
-//add event listener to search image
-$(".search-background").on("click", function () {
+if ("geolocation" in navigator) {
+    // check if geolocation is supported/enabled on current browser
+    navigator.geolocation.getCurrentPosition(
+        function success(position) {
+            // for when getting location is a success
+            var latitude = position.coords.latitude
+            latitude = latitude.toFixed(0)
+            var longitude = position.coords.longitude
+            longitude = longitude.toFixed(0)
+            console.log(latitude)
+            getWeather("lat=" + latitude + "&lon=" + longitude)
+        },
+        function error(error_message) {
+            // for when getting location results in an error
+            console.error('An error has occured while retrieving location', error_message)
+        }
+    )
+} else {
+    // geolocation is not supported
+    // get your location some other way
+    console.log('geolocation is not enabled on this browser')
+}
+
+function getWeather(input) {
+
     topDisplay.empty()
     bottomDisplay.empty()
     //Get the user input from the input box
-    var input = $(".input").val().trim()
+
 
     //Make a call to open weather with the user inputs
-    queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&APPID=74f0b99ce4d4ead30c56392cfe258bd7"
-    //Create an h1 with the city and current date
+    queryURL = "https://api.openweathermap.org/data/2.5/weather?" + input + "&APPID=74f0b99ce4d4ead30c56392cfe258bd7"
+
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function (response) {
-
+        console.log(response)
         var weatherDescritpion = response.weather[0].main
         var weatherImg = $("<img>")
         if (weatherDescritpion === "Clear") {
@@ -48,9 +71,8 @@ $(".search-background").on("click", function () {
         topDisplay.addClass("top-displayBorder")
         topDisplay.append(headingHolder, temperatureText, humidityText, windSpeedText)
 
-        var button = $("<button>")
-        button.addClass(input)
-        previousSearch.prepend(button.text(input))
+
+
 
         var latitude = response.coord.lat
         var longitude = response.coord.lon
@@ -79,7 +101,8 @@ $(".search-background").on("click", function () {
 
     })
 
-    forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + input + "&APPID=74f0b99ce4d4ead30c56392cfe258bd7"
+    //5 DAY FORECAST
+    forecastURL = "https://api.openweathermap.org/data/2.5/forecast?" + input + "&APPID=74f0b99ce4d4ead30c56392cfe258bd7"
     $.ajax({
         url: forecastURL,
         method: "GET"
@@ -88,19 +111,22 @@ $(".search-background").on("click", function () {
         j = 0
         var date = $("<h2>").text("5 Day Forecast:")
         bottomDisplay.append(date)
-        for (let i = 0; i < response.list.length; i += 8) {
+        for (let i = 6; i < response.list.length; i += 8) {
             j += 1
             var tomorrow = new Date();
             tomorrow.setDate(tomorrow.getDate() + j)
-            var nextDay = tomorrow.toLocaleDateString()
+            var nextDay = $("<p>").text(tomorrow.toLocaleDateString())
+            nextDay.addClass("blueCardText")
             var blueCard = $("<div>")
             blueCard.addClass("blueCard")
             var temp = parseInt(response.list[i].main.temp)
             temp = (temp - 273.15) * 9 / 5 + 32
             temp = temp.toFixed(0);
             var tempText = $("<p>").text("Temp: " + temp + " °F");
+            tempText.addClass("blueCardText")
             var humidity = response.list[i].main.humidity;
             var humidityText = $("<p>").text("Humidity:" + humidity + "%");
+            humidityText.addClass("blueCardText")
             var weatherDesc = response.list[i].weather[0].main
             var weatherThumbnailImg = $("<img>")
             if (weatherDesc === "Clear") {
@@ -120,9 +146,29 @@ $(".search-background").on("click", function () {
     $(".input").val("")
 
 
+
+}
+
+
+
+
+
+
+//add event listener to search image
+$(".search-background").on("click", function () {
+    var input = $(".input").val().trim()
+
+    var button = $("<button>")
+    button.addClass(input)
+    previousSearch.prepend(button.text(input))
+    input = "q=" + input
+    getWeather(input)
+
 })
 
 previousSearch.on("click", function (event) {
     var eventTarget = $(event.target)
     eventTargetValue = eventTarget.attr("class")
+    eventTargetValue = "q=" + eventTargetValue
+    getWeather(eventTargetValue)
 })
