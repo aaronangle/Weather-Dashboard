@@ -202,6 +202,10 @@ searchBackground.addEventListener("click", function () {
     button.textContent = userInput
     previousSearch.prepend(button)
 
+    buttonStorage.push(userInput)
+
+    localStorage.setItem('Cities', buttonStorage)
+
     userInput = "q=" + userInput;
     getWeather(userInput)
 
@@ -209,6 +213,22 @@ searchBackground.addEventListener("click", function () {
 
 })
 
+var buttonStorage = []
+
+//Loads the local storage and creates buttons
+window.onload = function () {
+    console.log("hi")
+    var cityNameStorage = localStorage.getItem("Cities")
+    var cityButton = cityNameStorage.split(",")
+    cityButton.forEach(function (name) {
+        var button = document.createElement("button");
+        button.className = name
+        button.textContent = name
+        previousSearch.prepend(button)
+        buttonStorage.push(name)
+    })
+
+}
 
 previousSearch.addEventListener("click", function (event) {
     var eventTarget = event.target.className;
