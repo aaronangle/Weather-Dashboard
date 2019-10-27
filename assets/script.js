@@ -31,9 +31,10 @@ if ("geolocation" in navigator) {
     console.log('geolocation is not enabled on this browser')
 }
 
-
+//Main function for getting the weather
 function getWeather(input) {
 
+    //sets the displays to empty when a new entry is searched
     topDisplay.textContent = "";
     bottomDisplay.textContent = "";
     middleDisplay.textContent = "";
@@ -89,7 +90,6 @@ function getWeather(input) {
             headingHolder.className = "headingHolder"
             headingHolder.append(cityText, weatherImg)
 
-
             topDisplay.className = "top-displayBorder"
 
             topDisplay.append(headingHolder)
@@ -132,6 +132,7 @@ function getWeather(input) {
 
     forecastURL = "https://api.openweathermap.org/data/2.5/forecast?" + input + "&APPID=74f0b99ce4d4ead30c56392cfe258bd7"
 
+    //Fetch call for the 5 da
     fetch(forecastURL, {
         method: "GET"
     }).then(data => data.json())
