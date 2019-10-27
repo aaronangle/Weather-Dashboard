@@ -7,7 +7,8 @@ html, body{
     padding: 0;
 }
 .container{
-    height: 100%;
+    min-height: 100%;
+    height: auto;
     background: linear-gradient(to top, rgb(214, 214, 214), white);
 }
 .navbar{
@@ -27,14 +28,16 @@ html, body{
 .main-body{
     display: flex;
     flex-direction: row;
-    height: 90%;
+    min-height: 93vh;
+    max-height: auto;
 }
 .left-content{
     display: flex;
     flex-direction: column;
     width: 25%;
-    background-color: #eeeeee;
-   
+    border-right: solid 1px black;
+    min-height: 100%;
+    
 }
 h3{
     margin: 5px;
@@ -61,5 +64,89 @@ h3{
     width: 75%;
     display: flex;
     flex-direction: column;
+    height: auto;
+}
+.top-displayBorder{
+    background-color: white;
+    border: solid lightgray 1px;
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+.bottom-display{
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+}
+.uvRed{
+    background-color: rgba(255, 0, 0, 0.801);
+}
+.uvGreen{
+    background-color: rgb(0, 131, 0);
 }
 
+.uvRed, .uvGreen, .uvYellow{
+    padding: 10px;
+    color: white;
+    border-radius: 10px;
+}
+.uvYellow{
+    background-color: yellow;
+    color: black;
+}
+.weatherImg{
+    height: 50px;
+    margin-left: 10px;
+    margin-top: 10px;
+
+}
+.headingHolder{
+    display: flex;
+    flex-direction: row;
+}
+button{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    height: 50px;
+    border: none;
+    text-align: left;    
+    border: solid 1px gray;
+}
+button:hover{
+    cursor: pointer;
+}
+.previousSearch{
+    display: flex;
+    flex-direction: column;
+}
+.weatherThumbnail{
+    height: 40px;
+    width: 40px;
+    text-align: center;
+
+}
+.blueCard{
+    background-color:#0262cf;
+    margin: 10px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: space-between;
+    width: auto;
+    align-items: center;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+@media only screen and (max-width: 1400px) {
+    .bottom-display {
+     flex-direction: column;
+    }
+    .blueCard{
+        width: 50%;
+    }
+  }
