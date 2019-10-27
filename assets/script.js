@@ -36,6 +36,7 @@ function getWeather(input) {
     //clear out the top and bottom displays to display new data
     topDisplay.empty()
     bottomDisplay.empty()
+    $(".middle-display").empty()
 
     //Make a call to open weather with the user inputs
     queryURL = "https://api.openweathermap.org/data/2.5/weather?" + input + "&APPID=74f0b99ce4d4ead30c56392cfe258bd7"
@@ -56,6 +57,8 @@ function getWeather(input) {
             weatherImg.attr("src", "assets/images/cloudy.png")
         } else if (weatherDescritpion === "Drizzle" || weatherDescritpion === "Rain") {
             weatherImg.attr("src", "assets/images/rain.png")
+        } else if (weatherDescritpion === "Snowing") {
+            weatherImg.attr("src", "assets/images/snowing.png")
         }
         //Add a class to the image for styling purposes
         weatherImg.addClass("weatherImg")
@@ -125,21 +128,27 @@ function getWeather(input) {
         $(".middle-display").append(date)
 
         for (let i = 6; i < response.list.length; i += 8) {
+            //increase counter
             j += 1
+            //var for tommorow and the next five days
             var tomorrow = new Date();
             tomorrow.setDate(tomorrow.getDate() + j)
             var nextDay = $("<p>").text(tomorrow.toLocaleDateString())
             nextDay.addClass("blueCardText")
+
             var blueCard = $("<div>")
             blueCard.addClass("blueCard")
+
             var temp = parseInt(response.list[i].main.temp)
             temp = (temp - 273.15) * 9 / 5 + 32
             temp = temp.toFixed(0);
             var tempText = $("<p>").text("Temp: " + temp + " °F");
             tempText.addClass("blueCardText")
+
             var humidity = response.list[i].main.humidity;
             var humidityText = $("<p>").text("Humidity:" + humidity + "%");
             humidityText.addClass("blueCardText")
+
             var weatherDesc = response.list[i].weather[0].main
             var weatherThumbnailImg = $("<img>")
             if (weatherDesc === "Clear") {
@@ -148,8 +157,11 @@ function getWeather(input) {
                 weatherThumbnailImg.attr("src", "assets/images/cloudy.png")
             } else if (weatherDesc === "Drizzle" || weatherDesc === "Rain") {
                 weatherThumbnailImg.attr("src", "assets/images/rain.png")
+            } else if (weatherDesc === "Snow") {
+                weatherThumbnailImg.attr("src", "assets/images/snowing.png")
             }
             weatherThumbnailImg.addClass("weatherThumbnail")
+
             blueCard.append(nextDay, weatherThumbnailImg, tempText, humidityText)
             bottomDisplay.append(blueCard)
         }
