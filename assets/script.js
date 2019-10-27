@@ -46,6 +46,7 @@ function getWeather(input) {
         url: queryURL,
         method: "GET"
     }).then(function (response) {
+        console.log(response)
         //Gets the main weather condition
         var weatherDescritpion = response.weather[0].main
 
@@ -59,6 +60,8 @@ function getWeather(input) {
             weatherImg.attr("src", "assets/images/rain.png")
         } else if (weatherDescritpion === "Snowing") {
             weatherImg.attr("src", "assets/images/snowing.png")
+        } else if (weatherDescritpion === "Thunderstorm") {
+            weatherImg.attr("src", "assets/images/thunder.png")
         }
         //Add a class to the image for styling purposes
         weatherImg.addClass("weatherImg")
@@ -159,6 +162,8 @@ function getWeather(input) {
                 weatherThumbnailImg.attr("src", "assets/images/rain.png")
             } else if (weatherDesc === "Snow") {
                 weatherThumbnailImg.attr("src", "assets/images/snowing.png")
+            } else if (weatherDesc === "Thunderstorm") {
+                weatherThumbnailImg.attr("src", "assets/images/thunder.png")
             }
             weatherThumbnailImg.addClass("weatherThumbnail")
 
